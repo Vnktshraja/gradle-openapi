@@ -1,0 +1,6 @@
+{
+    "dateLibrary": "java8",
+    "useBeanValidation": true,
+    "serializableModel": true,
+    "library": "spring-boot"
+}

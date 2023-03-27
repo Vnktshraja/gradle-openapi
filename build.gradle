@@ -1,0 +1,105 @@
+import org.gradle.api.provider.MapProperty
+
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.8'
+	id 'io.spring.dependency-management' version '1.1.0'
+	id 'org.openapi.generator' version '5.3.0'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+
+repositories {
+	mavenCentral()
+}
+
+configurations{
+	all*.exclude module: 'slf4j-simple'
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.openapitools:openapi-generator-gradle-plugin:6.4.0'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//	implementation 'com.code:dependent-project:1.0-SNAPSHOT'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent
+	implementation 'org.springframework.boot:spring-boot-starter-parent:2.7.8'
+	// https://mvnrepository.com/artifact/org.eclipse.persistence/javax.persistence
+//	implementation 'org.eclipse.persistence:javax.persistence:2.2.1'
+	// https://mvnrepository.com/artifact/org.springframework/spring-context
+	implementation 'org.springframework:spring-context:5.3.20'
+
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+	implementation 'io.springfox:springfox-swagger2:3.0.0'
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation 'org.openapitools:jackson-databind-nullable:0.2.4'
+//	compileOnly 'org.openapitools:openapi-generator-cli:5.3.0'
+
+	implementation 'org.openapitools:openapi-generator-core:5.3.0'
+
+
+//	implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+
+//	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+//	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+compileJava.dependsOn(tasks.openApiGenerate )
+
+openApiGenerate {
+	inputSpec = "/Users/venkateshraja/Downloads/dependent-project/student-api.yml".toString()
+	generatorName = "spring"
+	apiPackage = "com.gain.java.knowledge.api"
+	modelPackage = "com.gain.java.knowledge.api.model"
+//	outputDir = '/Users/venkateshraja/Downloads/gradle-openapi'
+    outputDir = "$buildDir/generated"
+
+	groupId = "com.gain"
+	configOptions = [
+			dateLibrary            : "java8",
+			artifactId             : "knowledge-api",
+			supportingFilesToGenerate        :"ApiUtil.java",
+			returnResponse         : "true",
+			interfaceOnly          : "true",
+			generateSupportingFiles: "true",
+			library                : "spring-mvc",
+			useTags                : "true",
+			hideGenerationTimestamp: "true",
+			useSwaggerAnnotations  : "true",
+			serializableModel      : "true",
+//			skipDefaultInterface : "true"
+	]
+
+//	globalProperties = [
+//			apis      : ""
+//	]
+}
+sourceSets  {
+	main {
+		java {
+			srcDir(files("${openApiGenerate.outputDir.get()}/src/main/java"))
+		}
+	}
+}
+
+
+//java -jar openapi-generator-cli.jar generate -i /Users/venkateshraja/Downloads/gradle-openapi/src/main/resources/student-api.yml -g java -o /Users/venkateshraja/Downloads/gradle-openapi/src/main/resources/openApi
+
+//openapi-generator generate -i /Users/venkateshraja/Downloads/gradle-openapi/src/main/resources/student-api.yml -g [java] -o /Users/venkateshraja/Downloads/gradle-openapi/src/main/resources/openApi
+//jar cvf yourJarName.jar -C /path/to/source/code/
+
+
+//  /opt/homebrew/Cellar/openapi-generator/6.4.0/libexec/openapi-generator-cli.jar
