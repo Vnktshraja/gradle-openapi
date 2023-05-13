@@ -22,7 +22,7 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public ResponseEntity<Void> addStudent(@Valid Student student) {
         StudentEntity entity = getStudentEntity(student);
-        repository.save(entity);
+        StudentEntity student1 = repository.save(entity);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
