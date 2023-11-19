@@ -2,6 +2,8 @@ package com.example.gradleopenapi.entity;
 
 //import jakarta.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 
@@ -17,6 +19,8 @@ public class StudentEntity {
 
     private String last_name;
 
+    private Integer age;
+    @JsonIgnore
     private String section;
 
     private String city;
@@ -71,10 +75,23 @@ public class StudentEntity {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Student [id=" + id + ", first_name=" + first_name + ", last_name=" + last_name + ", section=" + section
-                + ", city=" + city + ", name=" + name + "]";
+    public Integer getAge() {
+        return age;
     }
 
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentEntity{" +
+                "id=" + id +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", age=" + age +
+                ", section='" + section + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

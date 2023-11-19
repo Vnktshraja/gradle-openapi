@@ -8,5 +8,7 @@ public interface StudentService {
 
     ResponseEntity<Void> addStudent(@Valid Student student);
 
-    ResponseEntity<List<Student>> getAllStudent();
+    List<Student> getAllStudent();
+
+    void deleteAllStudent();
 }

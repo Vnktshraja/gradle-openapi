@@ -27,16 +27,23 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public ResponseEntity<List<Student>> getAllStudent() {
+    public List<Student> getAllStudent() {
         List<StudentEntity> students = repository.findAll();
         List<Student> studentList = students.parallelStream().map(studentEntity -> getStudentModel(studentEntity))
                 .collect(Collectors.toList());
-        return new ResponseEntity<List<Student>>(studentList, HttpStatus.OK);
+        return studentList;
     }
+
+    @Override
+    public void deleteAllStudent() {
+        repository.deleteAll();
+    }
+
 
     private StudentEntity getStudentEntity(Student student) {
         StudentEntity entity = new StudentEntity();
         entity.setCity(student.getCity());
+        entity.setAge(student.getAge());
         entity.setFirst_name(student.getFirstName());
         entity.setLast_name(student.getLastName());
         entity.setName(student.getName());
