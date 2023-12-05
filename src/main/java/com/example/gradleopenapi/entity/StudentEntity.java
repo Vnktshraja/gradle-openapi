@@ -19,7 +19,7 @@ public class StudentEntity {
 
     private String last_name;
 
-    private Integer age;
+    private Double age;
     @JsonIgnore
     private String section;
 
@@ -75,11 +75,11 @@ public class StudentEntity {
         this.name = name;
     }
 
-    public Integer getAge() {
+    public Double getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(Double age) {
         this.age = age;
     }
 

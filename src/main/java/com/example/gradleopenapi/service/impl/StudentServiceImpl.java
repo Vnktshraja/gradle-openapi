@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import com.example.gradleopenapi.entity.StudentEntity;
 import com.gain.java.knowledge.api.model.Student;
+
+import javax.annotation.PreDestroy;
 import javax.validation.Valid;
 
 import com.example.gradleopenapi.repository.StudentRepository;
@@ -60,6 +62,11 @@ public class StudentServiceImpl implements StudentService{
         student.setName(entity.getName());
         student.setSection(entity.getSection());
         return student;
+    }
+
+    @PreDestroy
+    public void preDestory(){
+        System.out.println("Predestroy Method called...");
     }
 
 }

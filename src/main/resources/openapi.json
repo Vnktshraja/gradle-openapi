@@ -98,7 +98,7 @@
           },
           "age": {
             "description": "The Age of Student.",
-            "type": "integer"
+            "type": "double"
           },
           "section": {
             "description": "The Class Section of student.",
